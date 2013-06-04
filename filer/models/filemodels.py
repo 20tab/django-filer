@@ -98,8 +98,7 @@ class File(PolymorphicModel, mixins.IconsMixin):
         # open the file.
         src_file = src_storage.open(src_file_name)
         src_file.open()
-        self.file = dst_storage.save(dst_file_name,
-            ContentFile(src_file.read()))
+        self.file = dst_storage.save(dst_file_name, src_file)
         src_storage.delete(src_file_name)
 
     def _copy_file(self, destination, overwrite=False):
@@ -120,7 +119,7 @@ class File(PolymorphicModel, mixins.IconsMixin):
         # open the file.
         src_file = storage.open(src_file_name)
         src_file.open()
-        return storage.save(destination, ContentFile(src_file.read()))
+        return storage.save(destination, src_file)
 
     def generate_sha1(self):
         sha = hashlib.sha1()
